@@ -344,6 +344,7 @@ public class WithAWSStep extends Step {
 
 					if (StringUtils.isNullOrEmpty(this.step.getIamMfaToken())) {
 						this.getContext().get(TaskListener.class).getLogger().format("Constructing AWS Credentials");
+						this.getContext().get(TaskListener.class).getLogger().format("Test"); //????
 						awsCredentials = amazonWebServicesCredentials.getCredentials();
 					} else {
 						// Since the getCredentials does its own roleAssumption, this is all it takes to get credentials

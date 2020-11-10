@@ -42,6 +42,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Objects;
 
 abstract class AbstractCFNCreateStackSetStep extends TemplateStepBase {
 
@@ -61,6 +62,9 @@ abstract class AbstractCFNCreateStackSetStep extends TemplateStepBase {
 	public String getOnFailure() {
 		return this.onFailure;
 	}
+
+
+
 
 	@DataBoundSetter
 	public void setOnFailure(String onFailure) {

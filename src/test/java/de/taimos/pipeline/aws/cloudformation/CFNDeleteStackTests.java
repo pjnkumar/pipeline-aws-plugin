@@ -28,7 +28,7 @@ import java.time.Duration;
 		fullyQualifiedNames = "de.taimos.pipeline.aws.cloudformation.*"
 )
 @PowerMockIgnore("javax.crypto.*")
-public class CFNDeleteStackTests {
+class CFNDeleteStackTests {
 
 	@Rule
 	private JenkinsRule jenkinsRule = new JenkinsRule();

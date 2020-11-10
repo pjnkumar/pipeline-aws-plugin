@@ -22,27 +22,30 @@
 package de.taimos.pipeline.aws.cloudformation.stacksets;
 
 import com.amazonaws.services.cloudformation.AmazonCloudFormation;
+//import com.amazonaws.services.cloudformation.model.*;
+import com.amazonaws.services.cloudformation.model.DescribeStackSetResult;
+import com.amazonaws.services.cloudformation.model.DescribeStackSetRequest;
 import com.amazonaws.services.cloudformation.model.AmazonCloudFormationException;
-import com.amazonaws.services.cloudformation.model.Capability;
+import com.amazonaws.services.cloudformation.model.Parameter;
+import com.amazonaws.services.cloudformation.model.StackInstanceSummary;
+import com.amazonaws.services.cloudformation.model.StackSetStatus;
+import com.amazonaws.services.cloudformation.model.Tag;
+import com.amazonaws.services.cloudformation.model.UpdateStackSetRequest;
+import com.amazonaws.services.cloudformation.model.UpdateStackSetResult;
+import com.amazonaws.services.cloudformation.model.CreateStackInstancesRequest;
+import com.amazonaws.services.cloudformation.model.CreateStackInstancesResult;
+import com.amazonaws.services.cloudformation.model.DescribeStackSetOperationResult;
 import com.amazonaws.services.cloudformation.model.CreateStackSetRequest;
 import com.amazonaws.services.cloudformation.model.CreateStackSetResult;
+import  com.amazonaws.services.cloudformation.model.Capability;
 import com.amazonaws.services.cloudformation.model.DeleteStackSetRequest;
 import com.amazonaws.services.cloudformation.model.DescribeStackSetOperationRequest;
-import com.amazonaws.services.cloudformation.model.DescribeStackSetOperationResult;
-import com.amazonaws.services.cloudformation.model.DescribeStackSetRequest;
-import com.amazonaws.services.cloudformation.model.DescribeStackSetResult;
 import com.amazonaws.services.cloudformation.model.LimitExceededException;
 import com.amazonaws.services.cloudformation.model.ListStackInstancesRequest;
 import com.amazonaws.services.cloudformation.model.ListStackInstancesResult;
 import com.amazonaws.services.cloudformation.model.OperationInProgressException;
-import com.amazonaws.services.cloudformation.model.Parameter;
-import com.amazonaws.services.cloudformation.model.StackInstanceSummary;
 import com.amazonaws.services.cloudformation.model.StackSetOperationStatus;
-import com.amazonaws.services.cloudformation.model.StackSetStatus;
 import com.amazonaws.services.cloudformation.model.StaleRequestException;
-import com.amazonaws.services.cloudformation.model.Tag;
-import com.amazonaws.services.cloudformation.model.UpdateStackSetRequest;
-import com.amazonaws.services.cloudformation.model.UpdateStackSetResult;
 import hudson.model.TaskListener;
 
 import java.time.Duration;
@@ -97,6 +100,14 @@ public class CloudFormationStackSet {
 			.withTags(tags);
 		CreateStackSetResult result = this.client.createStackSet(req);
 		this.listener.getLogger().println("Created Stack set stackSetId=" + result.getStackSetId());
+
+		return result;
+	}
+	public CreateStackInstancesResult createStackInstances (Collection<String> accounts, Collection<String> regions) {
+
+		CreateStackInstancesRequest req = new CreateStackInstancesRequest().withStackSetName(this.stackSet).withAccounts(accounts).withRegions(regions);
+		CreateStackInstancesResult result = this.client.createStackInstances(req);
+		this.listener.getLogger().println("Created Stack set instances");
 		return result;
 	}
 
